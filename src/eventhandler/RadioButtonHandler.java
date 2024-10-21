@@ -29,20 +29,16 @@ public class RadioButtonHandler implements ActionListener {
             JRadioButton selectedRadio = (JRadioButton) e.getSource();
 
             if (selectedRadio.getText().equals("Windows")) {
-                // Disable Type and Language fields
                 textFieldLanguage.setEnabled(true);
                 textFieldType.setEnabled(true);
                 
-                // Enable Is GUI and Package Manager fields
                 checkBoxIsGUI.setEnabled(false);
                 textFieldPackageManager.setEnabled(false);
                 textFieldOS.setText("Windows");
             } else if (selectedRadio.getText().equals("Linux")) {
-                // Disable Is GUI and Package Manager fields
                 checkBoxIsGUI.setEnabled(true);
                 textFieldPackageManager.setEnabled(true);
                 
-                // Enable Type and Language fields
                 textFieldLanguage.setEnabled(false);
                 textFieldType.setEnabled(false);
                 textFieldOS.setText("Linux");

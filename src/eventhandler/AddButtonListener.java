@@ -1,13 +1,12 @@
 package eventhandler;
 
+import database.DBConnector;
 import java.awt.event.ActionListener;
-
 import javax.swing.JCheckBox;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
 import object.Linux;
 import object.OS;
 import object.OSList;
@@ -26,6 +25,7 @@ public class AddButtonListener implements ActionListener {
     private OSList osList;
     private Windows windows;
     private Linux linux;
+    DBConnector dbConnector;
 
     public AddButtonListener(JTextField textFieldVersion, JTextField textFieldPublicDate,
                              JTextField textFieldLanguage, JTextField textFieldType, JTextField textFieldPackageManager,
@@ -41,6 +41,7 @@ public class AddButtonListener implements ActionListener {
         this.radioLinux = radioLinux;
         this.radioWindows = radioWindows;
         this.osList = osList;
+        dbConnector = new DBConnector();
     }
 
     @Override
@@ -72,10 +73,12 @@ public class AddButtonListener implements ActionListener {
             if(os.equals("Windows")){
                 windows = new Windows(language, type, version, publicDate);
                 addToList(windows);
+                dbConnector.insert(windows);
             }
             else{
                 linux = new Linux(isGUI, packageManager, version, publicDate);
                 addToList(linux);
+                dbConnector.insert(linux);
             }
 
             clearFields();

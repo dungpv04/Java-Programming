@@ -1,9 +1,14 @@
 package frame;
 
+import eventhandler.AddButtonListener;
+import eventhandler.OpenFileListener;
+import eventhandler.RadioButtonHandler;
+import eventhandler.RemoveButtonEnabler;
+import eventhandler.SaveFileListener;
+import eventhandler.SearchButtonListener;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
-
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
@@ -16,13 +21,6 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-
-import eventhandler.AddButtonListener;
-import eventhandler.OpenFileListener;
-import eventhandler.RadioButtonHandler;
-import eventhandler.RemoveButtonEnabler;
-import eventhandler.SaveFileListener;
-import eventhandler.SearchButtonListener;
 import object.NonEditableTableModel;
 import object.OSList;
 
@@ -102,7 +100,7 @@ public class ManagementApp extends JFrame {
         btnRemove = new JButton("Remove");
         btnRemove.setEnabled(false);
         btnSearch = new JButton("Search");
-        btnOpenFile = new JButton("Open File");
+        btnOpenFile = new JButton("Load Database");
         btnSaveFile = new JButton("Save to File");
 
         buttonPanel.add(btnAdd);

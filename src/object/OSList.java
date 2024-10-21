@@ -54,7 +54,7 @@ public class OSList implements Serializable {
     }
 
     public OSList(){
-        osList = new ArrayList<OS>();
+        osList = new ArrayList<>();
     }
 
     private void deserializeObjectFromString(){

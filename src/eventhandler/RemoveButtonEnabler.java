@@ -1,15 +1,14 @@
 package eventhandler;
 
+import database.DBConnector;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-
 import object.Linux;
 import object.OSList;
 import object.Windows;
@@ -19,18 +18,20 @@ public class RemoveButtonEnabler implements ListSelectionListener, ActionListene
     private JTable table;
     private DefaultTableModel tableModel;
     private OSList osList;
+    private DBConnector dbConnector;
 
     public RemoveButtonEnabler(JButton btnRemove, JTable table, DefaultTableModel tableModel, OSList osList) {
         this.btnRemove = btnRemove;
         this.table = table;
         this.tableModel = tableModel;
         this.osList = osList;
+        dbConnector = new DBConnector();
     }
 
     @Override
     public void valueChanged(ListSelectionEvent e) {
-        if (!e.getValueIsAdjusting()) { // Chỉ kích hoạt khi không còn thay đổi
-            btnRemove.setEnabled(table.getSelectedRow() != -1); // Kích hoạt nút Remove nếu có hàng được chọn
+        if (!e.getValueIsAdjusting()) {
+            btnRemove.setEnabled(table.getSelectedRow() != -1);
         }
     }
 
@@ -48,7 +49,6 @@ public class RemoveButtonEnabler implements ListSelectionListener, ActionListene
             
             String packageManager = (String) tableModel.getValueAt(selectedRow, 6);
 
-            // Confirm removal
             int confirmation = JOptionPane.showConfirmDialog(null,
                     "Are you sure you want to remove this entry?\nOS: " + os + "\nVersion: " + version + "\nPublic Date: " + publicDate,
                     "Confirm Removal", JOptionPane.YES_NO_OPTION);
@@ -58,10 +58,12 @@ public class RemoveButtonEnabler implements ListSelectionListener, ActionListene
                 tableModel.fireTableDataChanged();
                 if(os.equals("Windows")){
                     Windows windows = new Windows(language, type, version, publicDate);
+                    dbConnector.delete(windows);
                     osList.deleteOne(windows);
                 }
                 else{
                     Linux linux = new Linux(isGUI, packageManager, version, publicDate);
+                    dbConnector.delete(linux);
                     osList.deleteOne(linux);
                 }
             }
